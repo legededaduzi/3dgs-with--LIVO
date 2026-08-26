@@ -1,0 +1,130 @@
+{
+  "schema_version": 2,
+  "runtime": {
+    "training_profile": "online_quality",
+    "device": "cuda:0",
+    "random_seed": 0
+  },
+  "initialization": {
+    "pixel_stride": 2,
+    "voxel_size": 0.02,
+    "max_new_points": 50000,
+    "initial_opacity": 0.1,
+    "bootstrap_initial_opacity": 0.1
+  },
+  "geometry": {
+    "depth_mask_erosion_pixels": 1,
+    "depth_edge_relative_threshold": 0.08,
+    "coverage_threshold": 0.8,
+    "depth_relative_threshold": 0.1,
+    "minimum_gaussian_scale": 0.001,
+    "maximum_gaussian_scale": 0.08,
+    "maximum_gaussian_anisotropy": 32.0,
+    "minimum_opacity": 0.001,
+    "maximum_opacity": 0.95
+  },
+  "keyframes": {
+    "keyframe_overlap_threshold": 0.4,
+    "keyframe_translation_depth_ratio": 0.12,
+    "keyframe_rotation_threshold_deg": 20.0,
+    "keyframe_min_gap": 3,
+    "keyframe_max_gap": 12,
+    "overlap_keyframes": 6,
+    "history_keyframes": 2,
+    "checkpoint_keyframes": 10
+  },
+  "optimization": {
+    "mapping_iterations": 150,
+    "mapping_time_budget_ms": 900.0,
+    "loss_silhouette_threshold": 0.8,
+    "lambda_dssim": 0.2,
+    "depth_weight": 1.0,
+    "depth_weight_final": 0.01,
+    "depth_weight_max_steps": 5000,
+    "optimizer_type": "sparse_adam",
+    "position_lr": 0.00016,
+    "position_lr_final": 0.0000016,
+    "position_lr_max_steps": 30000,
+    "feature_lr": 0.0025,
+    "opacity_lr": 0.025,
+    "scaling_lr": 0.002,
+    "rotation_lr": 0.001,
+    "sh_degree": 3,
+    "sh_degree_interval": 1000
+  },
+  "refinement": {
+    "final_refinement_iterations": 2000,
+    "final_refinement_status_interval": 100,
+    "refine_all_frames": true,
+    "shuffle_refinement_frames": true
+  },
+  "pruning": {
+    "prune_batch_min_points": 1000,
+    "prune_batch_max_keyframes": 10
+  },
+  "features": {
+    "frustum_culling": {
+      "enabled": true,
+      "parameters": {
+        "frustum_margin": 0.2,
+        "frustum_near": 0.01,
+        "frustum_far": 100.0
+      }
+    },
+    "densification": {
+      "enabled": true,
+      "parameters": {
+        "densify_from_step": 500,
+        "densify_until_step": 4000,
+        "densification_interval": 100,
+        "densify_grad_threshold": 0.0002,
+        "densify_min_opacity": 0.0,
+        "percent_dense": 0.01,
+        "densify_max_points": 20000
+      }
+    },
+    "opacity_reset": {
+      "enabled": false,
+      "parameters": {
+        "opacity_reset_interval": 3000,
+        "opacity_reset_value": 0.01
+      }
+    },
+    "legacy_pruning": {
+      "enabled": false,
+      "parameters": {}
+    },
+    "ghost_pruning": {
+      "enabled": true,
+      "parameters": {
+        "newborn_grace_keyframes": 4,
+        "ghost_inconsistency_limit": 4
+      }
+    },
+    "opacity_pruning": {
+      "enabled": false,
+      "parameters": {
+        "opacity_prune_threshold": 0.005
+      }
+    },
+    "stale_pruning": {
+      "enabled": false,
+      "parameters": {
+        "stale_keyframes": 30
+      }
+    },
+    "scale_pruning": {
+      "enabled": false,
+      "parameters": {
+        "max_scale_ratio": 0.1
+      }
+    },
+    "final_cleanup": {
+      "enabled": false,
+      "parameters": {
+        "final_opacity_prune_threshold": 0.005,
+        "final_maximum_gaussian_scale": 0.08
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# colcon products are reproducible and should not be treated as source.
+build/
+install/
+log/
+
+# Mapping sessions and generated Gaussian maps are local artifacts.
+data/

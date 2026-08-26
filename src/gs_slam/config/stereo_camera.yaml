@@ -1,0 +1,57 @@
+frame_archiver:
+  ros__parameters:
+    left_image_topic: /camera/infra1/image_raw
+    right_image_topic: /camera/infra2/image_raw
+    color_image_topic: /camera/color/image_raw
+    odometry_topic: /odometry
+
+    # Shared pinhole intrinsics for the left and RGB images.
+    camera_intrinsics:
+      fx: 320.25493621826172
+      fy: 320.25492668151855
+      cx: 320.0
+      cy: 240.0
+
+    # T_body_camera transforms points from a ROS optical camera frame
+    # (x right, y down, z forward) into the body frame
+    # (x forward, y left, z up). Quaternion ordering is [x, y, z, w].
+    camera_extrinsics:
+      baseline: 0.08
+      left:
+        translation: [0.1, 0.04, 0.0]
+        rotation_xyzw: [-0.5, 0.5, -0.5, 0.5]
+      color:
+        translation: [0.1, 0.05, 0.0]
+        rotation_xyzw: [-0.5, 0.5, -0.5, 0.5]
+
+    processing:
+      rate_hz: 1.0
+      stereo_tolerance_ms: 5.0
+      pair_tolerance_ms: 20.0
+      sync_queue_size: 30
+
+    output:
+      directory: ./data
+      # Standard 3D Gaussian Splatting/COLMAP dataset layout.
+      image_directory: images
+      # uint16 inverse-depth priors; low-confidence pixels remain 0.
+      depth_directory: depth
+      sparse_directory: sparse/0
+      # Atomically published frame packets consumed by gs_slam_backend.
+      manifest_directory: manifests
+
+    # Stereo matching parameters used while encoding archived RGB-D frames.
+    stereo_matching:
+      min_disparity: 0
+      num_disparities: 128
+      block_size: 5
+      uniqueness_ratio: 10
+      speckle_window_size: 100
+      speckle_range: 2
+      disp12_max_diff: 1
+
+    depth_confidence:
+      # Base disparity uncertainty and confidence rejection thresholds.
+      disparity_sigma_px: 0.5
+      max_lr_error_px: 1.0
+      max_relative_uncertainty: 0.15

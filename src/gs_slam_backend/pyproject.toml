@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gs-slam-backend"
+version = "0.1.0"
+description = "Online Gaussian mapping backend for GS-SLAM"
+readme = "NOTICE.md"
+license = {file = "LICENSE.md"}
+requires-python = ">=3.10"
+dependencies = ["numpy", "opencv-python", "plyfile", "scipy", "torch"]
+
+[project.scripts]
+gs-slam-backend = "gs_slam_backend.runner:main"
+
+[tool.setuptools.packages.find]
+include = ["gs_slam_backend*"]

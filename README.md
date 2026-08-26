@@ -1,4 +1,4 @@
-# 3DGS with LIVO
+# GS-SLAM
 
 基于 **ROS 2、双目 RGB-D 与 3D Gaussian Splatting** 的在线稠密建图系统。
 
